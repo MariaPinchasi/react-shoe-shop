@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     const [apiData, setApiData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
     const fetchShoes = async () => {
         const shoesData = await getAllShoes();
         setApiData(shoesData);
         setIsLoading(false);
     }
+
     useEffect(() => {
         fetchShoes();
-    }, []);
+    });
 
     if (isLoading) {
         return <div className='loading'>Loading...</div>
