@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const getAllShoes = async () => {
     try {
         const res = await axios.get(

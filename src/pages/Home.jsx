@@ -6,17 +6,18 @@ const Home = () => {
     const [apiData, setApiData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const fetchShoes = async () => {
-        setIsLoading(false);
         const shoesData = await getAllShoes();
         setApiData(shoesData);
-
+        setIsLoading(false);
     }
     useEffect(() => {
         fetchShoes();
     }, []);
+
     if (isLoading) {
         return <div className='loading'>Loading...</div>
     }
+
     return (
         <section className='shoes-container'>
             {apiData.map(shoe => {
