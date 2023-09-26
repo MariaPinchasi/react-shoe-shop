@@ -14,7 +14,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchShoes();
-    });
+    }, []);
 
     if (isLoading) {
         return <div className='loading'>Loading...</div>
