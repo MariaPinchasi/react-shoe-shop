@@ -3,15 +3,7 @@ import { NavLink, Link } from "react-router-dom"
 import { useGlobalContext } from "../hooks/useGlobalContext";
 
 const SharedLayout = () => {
-    const { userName, setUserName } = useGlobalContext();
-    
-    const userPass = JSON.parse(localStorage.getItem('userPass'));
-    
-    const exit = () => {
-        localStorage.removeItem('userName');
-        localStorage.removeItem('userPass');
-        setUserName(JSON.parse(localStorage.getItem('userName')));
-    }
+    const { user, logout } = useGlobalContext();
 
     return (
         <>
@@ -27,7 +19,7 @@ const SharedLayout = () => {
                             </NavLink>
                         </li>
                         <li>
-                            {userName === 'admin' && userPass === 'adminpass' &&
+                            {user && user.isAdmin &&
                                 <NavLink
                                     to='/add'
                                     className={({ isActive }) => isActive ? 'active' : undefined}>
@@ -36,19 +28,19 @@ const SharedLayout = () => {
                         </li>
                     </ul>
                     <div className="log-in-and-out">
-                        {userName && <p className="user-name">{`hello ${userName}`}</p>}
-                        {!userName &&
+                        {user && <p className="user-name">{`hello ${user.name}`}</p>}
+                        {!user &&
                             <Link
                                 to='/logIn'
                                 className='btn login-btn'>
                                 Log In
                             </Link>
                         }
-                        {userName &&
+                        {user &&
                             <Link
                                 to='/'
                                 className='btn login-btn'
-                                onClick={exit}>
+                                onClick={logout}>
                                 Log Out
                             </Link>
                         }

@@ -10,8 +10,7 @@ const Product = () => {
     const navigate = useNavigate();
 
     const [shoe, setShoe] = useState({});
-    const { userName } = useGlobalContext();
-    const userPass = JSON.parse(localStorage.getItem('userPass'));
+    const { user } = useGlobalContext();
 
     const fetchShoe = async () => {
         const shoeData = await getShoe(shoeId);
@@ -36,14 +35,13 @@ const Product = () => {
                 <h2 className='shoe-brand'>{shoe.brand}</h2>
                 <img className='shoe-img' src={shoe.image} alt='shoe-img' />
                 <h2 className='shoe-price'>{`${shoe.price}$`}</h2>
-                {userName === 'admin' && userPass === 'adminpass' &&
-                    <Link to={`/products/${shoe.id}/edit`} className="btn">Edit</Link>
+                {user && user.isAdmin && (
+                    <>
+                        <Link to={`/products/${shoe.id}/edit`} className="btn">Edit</Link>
+                        <button onClick={handleDelete} className="btn">Delete</button>
+                    </>
+                )
                 }
-                {userName === 'admin' && userPass === 'adminpass' &&
-                    <button onClick={handleDelete} className="btn">Delete</button>
-                }
-
-
             </div>
         </main>
 
