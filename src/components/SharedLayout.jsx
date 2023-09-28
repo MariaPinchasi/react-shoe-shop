@@ -3,10 +3,14 @@ import { NavLink, Link } from "react-router-dom"
 import { useGlobalContext } from "../hooks/useGlobalContext";
 
 const SharedLayout = () => {
-    const { isAdmin, setIsAdmin, isUser, setIsUser, userName } = useGlobalContext();
+    const { userName, setUserName } = useGlobalContext();
+    
+    const userPass = JSON.parse(localStorage.getItem('userPass'));
+    
     const exit = () => {
-        setIsAdmin(false);
-        setIsUser(false);
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userPass');
+        setUserName(JSON.parse(localStorage.getItem('userName')));
     }
 
     return (
@@ -23,25 +27,24 @@ const SharedLayout = () => {
                             </NavLink>
                         </li>
                         <li>
-                            {isAdmin &&
+                            {userName === 'admin' && userPass === 'adminpass' &&
                                 <NavLink
                                     to='/add'
                                     className={({ isActive }) => isActive ? 'active' : undefined}>
                                     Add Product
                                 </NavLink>}
-
                         </li>
                     </ul>
                     <div className="log-in-and-out">
-                        {isUser && <p className="user-name">{`hello ${userName}`}</p>}
-                        {!isUser &&
+                        {userName && <p className="user-name">{`hello ${userName}`}</p>}
+                        {!userName &&
                             <Link
                                 to='/logIn'
                                 className='btn login-btn'>
                                 Log In
                             </Link>
                         }
-                        {isUser &&
+                        {userName &&
                             <Link
                                 to='/'
                                 className='btn login-btn'
@@ -50,8 +53,6 @@ const SharedLayout = () => {
                             </Link>
                         }
                     </div>
-
-
                 </nav>
                 <main>
                     <Outlet />

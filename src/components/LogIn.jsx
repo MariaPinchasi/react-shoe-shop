@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useNavigate } from 'react-router'
 
 const LogIn = () => {
     const navigate = useNavigate();
+    const { setUserName } = useGlobalContext();
 
     const [user, setUser] = useState({
         name: "",
-        password: ""
+        password: "",
+        isUserAdmin: false
     });
-    const { adminLogged, userLogged, setUserName } = useGlobalContext();
+
     const [errors, setErrors] = useState({
         name: null,
         password: null
     })
+
+
+    useEffect(() => {
+        localStorage.setItem('userName', JSON.stringify(user.name));
+        localStorage.setItem('userPass', JSON.stringify(user.password));
+    }, [user])
+
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -42,12 +51,8 @@ const LogIn = () => {
         }
         setErrors(newErrors);
 
-        if (isValid && user.name === 'admin' && user.password == 'adminpass') {
-            adminLogged();
-        }
         if (isValid) {
-            userLogged();
-            setUserName(user.name);
+            setUserName(JSON.parse(localStorage.getItem('userName')));
             navigate('/');
         }
     };
