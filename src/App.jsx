@@ -1,5 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import SharedLayout from './components/SharedLayout';
+import LogIn from './components/LogIn';
+import ProtectedRoute from './components/ProtectedRoute';
+
 import {
   Home,
   AddProduct,
@@ -8,7 +11,6 @@ import {
   Delete,
   NotFound
 } from './pages';
-import LogIn from './components/LogIn';
 
 const routes = [
   {
@@ -21,7 +23,7 @@ const routes = [
       },
       {
         path: 'add',
-        element: <AddProduct />,
+        element: <ProtectedRoute><AddProduct /> </ProtectedRoute>,
       },
       {
         path: 'logIn',
@@ -36,13 +38,13 @@ const routes = [
           },
           {
             path: ':shoeId/edit',
-            element: <EditProduct />
+            element: <ProtectedRoute> <EditProduct /></ProtectedRoute>
           }
         ]
       },
       {
         path: 'delete',
-        element: <Delete />,
+        element: <ProtectedRoute> <Delete /></ProtectedRoute>,
       },
     ]
   },
