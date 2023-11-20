@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router'
 
 const useForm = (shoe, setShoe, setErrors, apiFunction) => {
     const navigate = useNavigate();
+
     const handleChange = (e) => {
         setShoe({
             ...shoe,
