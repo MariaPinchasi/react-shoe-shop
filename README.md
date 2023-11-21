@@ -1,4 +1,3 @@
-Certainly! Here's the README with "store" instead of "shop":
 
 # Shoe Store Manager Application
 
